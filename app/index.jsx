@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import AppContainer from 'containers/App';
+import configureStore from 'store/configureStore';
 
-import CommentBox from './components/comment-box';
-
-// const pair = ['Trainspotting', '28 Days Later'];
-
-// const CommentBox = React.createClass({
-//   render() {
-//     return (
-//       <div className="commentBox">
-//         Hello, world! I am a CommentBox !!!!!!
-//       </div>
-//     );
-//   }
-// });
-
+const store = configureStore();
 
 ReactDOM.render(
-  <CommentBox name="Donovan" />,
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>,
   document.getElementById('app')
 );
