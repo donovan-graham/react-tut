@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const HelloWorld = ({ username }) => (
   <div className="hello-world">
-    Hello, world! I am {username}!!!
+    Hello, world! I am {username} !!!
   </div>
 );
 

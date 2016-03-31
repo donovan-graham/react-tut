@@ -7,4 +7,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    onClick() {
+      dispatch({ type: 'FETCH_REQUESTED' });
+    },
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -20,6 +20,11 @@ const session = (state = initialState, action) => {
         isAuthenticated: false,
       });
 
+    case 'FETCH_SUCCEEDED':
+      return Object.assign({}, state, {
+        username: action.json.current_user_url,
+      });
+
     default:
       return state;
   }
