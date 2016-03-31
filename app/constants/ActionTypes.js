@@ -1,2 +1,6 @@
 export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 export const CLEAR_TOKEN = 'CLEAR_TOKEN';
+
+export const FETCH_REQUESTED = 'FETCH_REQUESTED';
+export const FETCH_SUCCEEDED = 'FETCH_SUCCEEDED';
+export const FETCH_FAILED = 'FETCH_FAILED';
