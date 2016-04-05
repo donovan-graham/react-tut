@@ -6,12 +6,14 @@ import HomeContainer from 'containers/Home';
 import AdditionalContribution from 'containers/AdditionalContribution';
 import RouteNotFound from 'components/RouteNotFound';
 
-/// This is NOT WORKING check app/index.jsx until then
+import { pathForBoom, pathForAdditionalContribution } from 'routes/paths';
+
+// This is NOT WORKING check app/index.jsx until then
 
 const routes = () => (
   <Route path="/" component={AppLayout}>
-    <Route path="/boom" component={HomeContainer} />
-    <Route path="/additional-contribution" component={AdditionalContribution} />
+    <Route path={pathForBoom()} component={HomeContainer} />
+    <Route path={pathForAdditionalContribution()} component={AdditionalContribution} />
     <Route path="*" component={RouteNotFound} />
   </Route>
 );

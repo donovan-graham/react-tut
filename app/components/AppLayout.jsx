@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
+import { pathForBoom, pathForAdditionalContribution } from 'routes/paths';
+
+
 const ulStyle = {
   listStyleType: 'none',
   margin: '0 0 20px 0',
@@ -18,8 +21,8 @@ const AppLayout = ({ children }) => (
     <div>
       <ul style={ulStyle}>
         <li style={liStyle}><Link to="/">Home</Link></li>
-        <li style={liStyle}><Link to="/boom">Boom</Link></li>
-        <li style={liStyle}><Link to="/additional-contribution">Additional Contribution</Link></li>
+        <li style={liStyle}><Link to={pathForBoom()}>Boom</Link></li>
+        <li style={liStyle}><Link to={pathForAdditionalContribution()}>Additional Contribution</Link></li>
       </ul>
     </div>
 

@@ -14,6 +14,8 @@ import HomeContainer from 'containers/Home';
 import AdditionalContribution from 'containers/AdditionalContribution';
 import RouteNotFound from 'components/RouteNotFound';
 
+import { pathForBoom, pathForAdditionalContribution } from 'routes/paths';
+
 
 const store = configureStore();
 
@@ -21,8 +23,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={AppLayout}>
-        <Route path="/boom" component={HomeContainer} />
-        <Route path="/additional-contribution" component={AdditionalContribution} />
+        <Route path="{pathForBoom()}" component={HomeContainer} />
+        <Route path={pathForAdditionalContribution()} component={AdditionalContribution} />
         <Route path="*" component={RouteNotFound} />
       </Route>
     </Router>
