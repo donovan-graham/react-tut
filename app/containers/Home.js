@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Home from 'components/Home';
 import { fetchRequested } from 'actions';
 
+
 function mapStateToProps(state) {
   return {
     username: state.session.username,
@@ -11,7 +12,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   onClick: () => {
-    dispatch({ type: 'FETCH_REQUESTED' });
+    dispatch(fetchRequested());
   },
 });
 

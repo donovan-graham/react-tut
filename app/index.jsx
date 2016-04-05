@@ -11,6 +11,7 @@ import { Route } from 'react-router';
 
 import AppLayout from 'components/AppLayout';
 import HomeContainer from 'containers/Home';
+import AdditionalContribution from 'containers/AdditionalContribution';
 import RouteNotFound from 'components/RouteNotFound';
 
 
@@ -19,10 +20,11 @@ const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
-        <Route path="/" component={AppLayout}>
-          <Route path="/boom" component={HomeContainer} />
-          <Route path="*" component={RouteNotFound} />
-        </Route>
+      <Route path="/" component={AppLayout}>
+        <Route path="/boom" component={HomeContainer} />
+        <Route path="/additional-contribution" component={AdditionalContribution} />
+        <Route path="*" component={RouteNotFound} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('app')

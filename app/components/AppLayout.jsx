@@ -19,6 +19,7 @@ const AppLayout = ({ children }) => (
       <ul style={ulStyle}>
         <li style={liStyle}><Link to="/">Home</Link></li>
         <li style={liStyle}><Link to="/boom">Boom</Link></li>
+        <li style={liStyle}><Link to="/additional-contribution">Additional Contribution</Link></li>
       </ul>
     </div>
 

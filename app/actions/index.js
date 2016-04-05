@@ -23,6 +23,10 @@ export const fetchFailed = (error) => ({
   error,
 });
 
+export const fetchRequested = () => ({
+  type: FETCH_REQUESTED,
+});
+
 
 // export function fetchRequested() {
 //   return function (dispatch, getState) {
