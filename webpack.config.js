@@ -9,7 +9,6 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin();
 
-
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -43,6 +42,7 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     hot: true,
+    historyApiFallback: true,
   },
   plugins: [
     HTMLWebpackPluginConfig,
