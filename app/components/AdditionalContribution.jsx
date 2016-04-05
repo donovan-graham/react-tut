@@ -7,6 +7,7 @@ const AdditionalContribution = ({
     firstName,
     lastName,
     email,
+    holdings,
   },
   handleSubmit,
   resetForm,
@@ -32,6 +33,34 @@ const AdditionalContribution = ({
         {email.touched && email.error && <div>{email.error}</div>}
       </div>
 
+      <br />
+      <br />
+      <br />
+
+
+      {!holdings.length && <div>No holdings</div>}
+      {holdings.map((holding, index) =>
+        <div key={index}>
+          <label>Holdings #{index + 1}</label>
+          <div>
+            <input type="text" placeholder="Fund" {...holding.fund} />
+            {holding.fund.touched && holding.fund.error && <div>{holding.fund.error}</div>}
+          </div>
+          <div>
+            <input type="text" placeholder="Amount" {...holding.amount} />
+            {holding.amount.touched && holding.amount.error && <div>{holding.amount.error}</div>}
+          </div>
+          <button type="button" onClick={() => holdings.removeField(index)}>Remove</button>
+        </div>
+      )}
+      <div>
+        <button type="button" onClick={() => holdings.addField()}>Add</button>
+      </div>
+
+      <br />
+      <br />
+      <br />
+
       <button type="submit" disabled={submitting}>Submit</button>
       <button disabled={submitting} onClick={resetForm}>Reset</button>
 
@@ -49,6 +78,23 @@ AdditionalContribution.propTypes = {
   submitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
+};
+
+
+const validateHolding = holding => {
+  const errors = {};
+
+  // fund
+  if (!holding.fund) {
+    errors.fund = 'Required';
+  }
+
+  // amount
+  if (!holding.amount) {
+    errors.amount = 'Required';
+  }
+
+  return errors;
 };
 
 
@@ -80,13 +126,23 @@ const validate = values => {
     errors.email = 'Invalid email address';
   }
 
+
+  // holdings
+  errors.holdings = values.holdings.map(validateHolding);
+
   return errors;
 };
 
 
 export default reduxForm({
   form: 'additionalContribution',
-  fields: ['firstName', 'lastName', 'email'],
+  fields: [
+    'firstName',
+    'lastName',
+    'email',
+    'holdings[].fund',
+    'holdings[].amount',
+  ],
   validate,
 })(AdditionalContribution);
 
