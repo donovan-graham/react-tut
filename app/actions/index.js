@@ -1,6 +1,6 @@
 import {
   UPDATE_TOKEN, CLEAR_TOKEN,
-  FETCH_SUCCEEDED, FETCH_FAILED,
+  FETCH_REQUESTED, FETCH_SUCCEEDED, FETCH_FAILED,
 } from 'constants/ActionTypes';
 
 export const updateToken = (token) => ({
@@ -23,3 +23,12 @@ export const fetchFailed = (error) => ({
   error,
 });
 
+
+// export function fetchRequested() {
+//   return function (dispatch, getState) {
+//     if (getState().session.isLoading) {
+//       return;
+//     }
+//     dispatch({ type: FETCH_REQUESTED });
+//   };
+// }
