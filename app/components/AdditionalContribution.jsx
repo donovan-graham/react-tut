@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
+import FormField from 'components/FormField';
 
 const AdditionalContribution = ({
   step,
@@ -17,26 +18,13 @@ const AdditionalContribution = ({
     <h1>Additional Contribution: Step {step}</h1>
 
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>First Name</label>
-        <input type="text" placeholder="First Name" {...firstName} />
-        {firstName.touched && firstName.error && <div>{firstName.error}</div>}
-      </div>
-      <div>
-        <label>Last Name</label>
-        <input type="text" placeholder="Last Name" {...lastName} />
-        {lastName.touched && lastName.error && <div>{lastName.error}</div>}
-      </div>
-      <div>
-        <label>Email</label>
-        <input type="email" placeholder="Email" {...email} />
-        {email.touched && email.error && <div>{email.error}</div>}
-      </div>
+      <FormField field={firstName} label="First Name" prompt="Fill in your first name" />
+      <FormField field={lastName} label="Last Name" prompt="Fill in your last name" />
+      <FormField field={email} label="Email" prompt="Fill in your email" />
 
       <br />
       <br />
       <br />
-
 
       {!holdings.length && <div>No holdings</div>}
       {holdings.map((holding, index) =>
@@ -44,11 +32,11 @@ const AdditionalContribution = ({
           <label>Holdings #{index + 1}</label>
           <div>
             <input type="text" placeholder="Fund" {...holding.fund} />
-            {holding.fund.touched && holding.fund.error && <div>{holding.fund.error}</div>}
+            {holding.fund.touched && holding.fund.error && <div className="error">{holding.fund.error}</div>}
           </div>
           <div>
             <input type="text" placeholder="Amount" {...holding.amount} />
-            {holding.amount.touched && holding.amount.error && <div>{holding.amount.error}</div>}
+            {holding.amount.touched && holding.amount.error && <div className="error">{holding.amount.error}</div>}
           </div>
           <button type="button" onClick={() => holdings.removeField(index)}>Remove</button>
         </div>
@@ -98,34 +86,39 @@ const validateHolding = holding => {
 };
 
 
+const isRequired = (value) => !value || !value.trim();
+
+
 const validate = values => {
   const errors = {};
 
   // firstName
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  } else if (values.firstName.length < 3) {
+  const firstName = values.firstName;
+  if (isRequired(firstName)) {
+    errors.firstName = 'Your first name is required';
+  } else if (firstName.length < 3) {
     errors.firstName = 'Must be 3 characters or more';
-  } else if (values.firstName.length > 15) {
+  } else if (firstName.length > 15) {
     errors.firstName = 'Must be 15 characters or less';
   }
 
   // lastName
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  } else if (values.lastName.length < 3) {
+  const lastName = values.lastName;
+  if (isRequired(lastName)) {
+    errors.lastName = 'Your last name is required';
+  } else if (lastName.length < 3) {
     errors.lastName = 'Must be 3 characters or more';
-  } else if (values.lastName.length > 15) {
+  } else if (lastName.length > 15) {
     errors.lastName = 'Must be 15 characters or less';
   }
 
   // email
-  if (!values.email) {
-    errors.email = 'Required';
+  const email = values.email;
+  if (isRequired(email)) {
+    errors.email = 'Your email is required';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address';
   }
-
 
   // holdings
   errors.holdings = values.holdings.map(validateHolding);
