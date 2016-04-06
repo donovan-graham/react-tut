@@ -15,8 +15,8 @@ const FormField = ({ field, label, prompt }) => {
 
 FormField.propTypes = {
   field: PropTypes.object.isRequired,
-  label: PropTypes.string.isOptional,
-  prompt: PropTypes.string.isOptional,
+  label: PropTypes.string,
+  prompt: PropTypes.string,
 };
 
 export default FormField;
