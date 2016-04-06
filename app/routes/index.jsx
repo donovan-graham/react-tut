@@ -10,13 +10,12 @@ import { pathForBoom, pathForAdditionalContribution } from 'routes/paths';
 
 // This is NOT WORKING check app/index.jsx until then
 
-const routes = () => (
+const routes = (
   <Route path="/" component={AppLayout}>
     <Route path={pathForBoom()} component={HomeContainer} />
     <Route path={pathForAdditionalContribution()} component={AdditionalContribution} />
     <Route path="*" component={RouteNotFound} />
   </Route>
 );
-
 
 export default routes;

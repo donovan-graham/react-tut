@@ -2,20 +2,26 @@ import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import FormField from 'components/FormField';
 
+
 const AdditionalContribution = ({
   step,
   fields: {
     firstName,
     lastName,
     email,
+    depositAmount,
     holdings,
   },
   handleSubmit,
   resetForm,
   submitting,
 }) => {
-  const totalHoldings = holdings.reduce((prev, holding) =>
-      prev + (parseInt(holding.amount.value, 0) || 0), 0);
+  const totalHoldings = holdings.reduce((prev, holding) => {
+    if (holding && holding.amount) {
+      return prev + (parseInt(holding.amount.value, 0) || 0);
+    }
+    return prev;
+  }, 0);
 
   return (
     <div>
@@ -26,6 +32,7 @@ const AdditionalContribution = ({
         <FormField field={firstName} label="First Name" prompt="Fill in your first name" />
         <FormField field={lastName} label="Last Name" prompt="Fill in your last name" />
         <FormField field={email} label="Email" prompt="Fill in your email" />
+        <FormField field={depositAmount} label="Despoit amount" prompt="Fill in how much you want to deposit" type="number" />
 
         <br />
         <br />
@@ -132,6 +139,23 @@ const validate = values => {
 
   const holdings = values.holdings;
   errors.holdings = holdings.map(validateHolding);
+
+  const depositAmount = values.depositAmount;
+  if (isMissing(depositAmount)) {
+    errors.depositAmount = 'Your deposit amount is needed';
+  } else {
+    const totalHoldings = holdings.reduce((prev, holding) => {
+      if (holding && holding.amount) {
+        return prev + (parseInt(holding.amount, 0) || 0);
+      }
+      return prev;
+    }, 0);
+
+    if (parseInt(totalHoldings, 0) !== parseInt(depositAmount, 0)) {
+      errors.depositAmount = 'Your deposit amount does equal your holdings';
+    }
+  }
+
   return errors;
 };
 
@@ -142,6 +166,7 @@ export default reduxForm({
     'firstName',
     'lastName',
     'email',
+    'depositAmount',
     'holdings[].fund',
     'holdings[].amount',
   ],
