@@ -14,13 +14,15 @@ const AdditionalContribution = ({
   resetForm,
   submitting,
 }) => {
-  const totalHoldings = holdings.reduce((i, h) => (parseInt(h.amount.value, 0) || 0) + i, 0);
+  const totalHoldings = holdings.reduce((prev, holding) =>
+      prev + (parseInt(holding.amount.value, 0) || 0), 0);
 
   return (
     <div>
       <h1>Additional Contribution: Step {step}</h1>
 
       <form onSubmit={handleSubmit}>
+
         <FormField field={firstName} label="First Name" prompt="Fill in your first name" />
         <FormField field={lastName} label="Last Name" prompt="Fill in your last name" />
         <FormField field={email} label="Email" prompt="Fill in your email" />
@@ -35,11 +37,13 @@ const AdditionalContribution = ({
             <label>Holdings #{index + 1}</label>
             <div>
               <input type="text" placeholder="Fund" {...holding.fund} />
-              {holding.fund.touched && holding.fund.error && <div className="error">{holding.fund.error}</div>}
+              {holding.fund.touched && holding.fund.error &&
+                <div className="error">{holding.fund.error}</div>}
             </div>
             <div>
               <input type="text" placeholder="Amount" {...holding.amount} />
-              {holding.amount.touched && holding.amount.error && <div className="error">{holding.amount.error}</div>}
+              {holding.amount.touched && holding.amount.error &&
+                <div className="error">{holding.amount.error}</div>}
             </div>
             <button type="button" onClick={() => holdings.removeField(index)}>Remove</button>
           </div>
@@ -79,6 +83,9 @@ AdditionalContribution.propTypes = {
 };
 
 
+/* validation */
+const isMissing = (value) => !value || !value.trim();
+
 const validateHolding = holding => {
   const errors = {};
 
@@ -95,44 +102,36 @@ const validateHolding = holding => {
   return errors;
 };
 
-
-const isRequired = (value) => !value || !value.trim();
-
-
 const validate = values => {
   const errors = {};
 
-  // firstName
   const firstName = values.firstName;
-  if (isRequired(firstName)) {
-    errors.firstName = 'Your first name is required';
+  if (isMissing(firstName)) {
+    errors.firstName = 'Your first name is needed';
   } else if (firstName.length < 3) {
     errors.firstName = 'Must be 3 characters or more';
   } else if (firstName.length > 15) {
     errors.firstName = 'Must be 15 characters or less';
   }
 
-  // lastName
   const lastName = values.lastName;
-  if (isRequired(lastName)) {
-    errors.lastName = 'Your last name is required';
+  if (isMissing(lastName)) {
+    errors.lastName = 'Your last name is needed';
   } else if (lastName.length < 3) {
     errors.lastName = 'Must be 3 characters or more';
   } else if (lastName.length > 15) {
     errors.lastName = 'Must be 15 characters or less';
   }
 
-  // email
   const email = values.email;
-  if (isRequired(email)) {
-    errors.email = 'Your email is required';
+  if (isMissing(email)) {
+    errors.email = 'Your email is needed';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address';
   }
 
-  // holdings
-  errors.holdings = values.holdings.map(validateHolding);
-
+  const holdings = values.holdings;
+  errors.holdings = holdings.map(validateHolding);
   return errors;
 };
 
