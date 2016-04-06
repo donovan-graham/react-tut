@@ -13,49 +13,59 @@ const AdditionalContribution = ({
   handleSubmit,
   resetForm,
   submitting,
-}) => (
-  <div>
-    <h1>Additional Contribution: Step {step}</h1>
+}) => {
+  const totalHoldings = holdings.reduce((i, h) => (parseInt(h.amount.value, 0) || 0) + i, 0);
 
-    <form onSubmit={handleSubmit}>
-      <FormField field={firstName} label="First Name" prompt="Fill in your first name" />
-      <FormField field={lastName} label="Last Name" prompt="Fill in your last name" />
-      <FormField field={email} label="Email" prompt="Fill in your email" />
+  return (
+    <div>
+      <h1>Additional Contribution: Step {step}</h1>
 
-      <br />
-      <br />
-      <br />
+      <form onSubmit={handleSubmit}>
+        <FormField field={firstName} label="First Name" prompt="Fill in your first name" />
+        <FormField field={lastName} label="Last Name" prompt="Fill in your last name" />
+        <FormField field={email} label="Email" prompt="Fill in your email" />
 
-      {!holdings.length && <div>No holdings</div>}
-      {holdings.map((holding, index) =>
-        <div key={index}>
-          <label>Holdings #{index + 1}</label>
-          <div>
-            <input type="text" placeholder="Fund" {...holding.fund} />
-            {holding.fund.touched && holding.fund.error && <div className="error">{holding.fund.error}</div>}
+        <br />
+        <br />
+        <br />
+
+        {!holdings.length && <div>No holdings</div>}
+        {holdings.map((holding, index) =>
+          <div key={index}>
+            <label>Holdings #{index + 1}</label>
+            <div>
+              <input type="text" placeholder="Fund" {...holding.fund} />
+              {holding.fund.touched && holding.fund.error && <div className="error">{holding.fund.error}</div>}
+            </div>
+            <div>
+              <input type="text" placeholder="Amount" {...holding.amount} />
+              {holding.amount.touched && holding.amount.error && <div className="error">{holding.amount.error}</div>}
+            </div>
+            <button type="button" onClick={() => holdings.removeField(index)}>Remove</button>
           </div>
-          <div>
-            <input type="text" placeholder="Amount" {...holding.amount} />
-            {holding.amount.touched && holding.amount.error && <div className="error">{holding.amount.error}</div>}
-          </div>
-          <button type="button" onClick={() => holdings.removeField(index)}>Remove</button>
+        )}
+
+        <div>
+          <label>Holding Total</label> &nbsp; &nbsp; &nbsp; &nbsp;
+          <strong>{totalHoldings}</strong>
         </div>
-      )}
-      <div>
-        <button type="button" onClick={() => holdings.addField()}>Add</button>
-      </div>
 
-      <br />
-      <br />
-      <br />
 
-      <button type="submit" disabled={submitting}>Submit</button>
-      <button disabled={submitting} onClick={resetForm}>Reset</button>
+        <div>
+          <button type="button" onClick={() => holdings.addField()}>Add</button>
+        </div>
 
-    </form>
-  </div>
-);
+        <br />
+        <br />
+        <br />
 
+        <button type="submit" disabled={submitting}>Submit</button>
+        <button disabled={submitting} onClick={resetForm}>Reset</button>
+
+      </form>
+    </div>
+  );
+};
 
 AdditionalContribution.propTypes = {
   // state
