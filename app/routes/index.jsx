@@ -8,10 +8,24 @@ import RouteNotFound from 'components/RouteNotFound';
 
 import { pathForBoom, pathForAdditionalContribution } from 'routes/paths';
 
-// This is NOT WORKING check app/index.jsx until then
+const requireJWT = (nextState, replace) => {
+  const query = nextState.location.query;
+  const token = query && query.token;
+
+  if (token) {
+    console.log('Token:', token);
+
+    const newQuery = Object.assign({}, query);
+    delete newQuery.token;
+    replace({
+      pathname: nextState.location.pathname,
+      query: newQuery,
+    });
+  }
+};
 
 const routes = (
-  <Route path="/" component={AppLayout}>
+  <Route path="/" component={AppLayout} onEnter={requireJWT}>
     <Route path={pathForBoom()} component={HomeContainer} />
     <Route path={pathForAdditionalContribution()} component={AdditionalContribution} />
     <Route path="*" component={RouteNotFound} />
