@@ -1,6 +1,8 @@
 import { call, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
 import { get } from 'superagent';
+// import fetch from 'isomorphic-fetch'
+
 
 import { FETCH_REQUESTED } from 'constants/ActionTypes';
 import { fetchSucceeded, fetchFailed } from 'actions';

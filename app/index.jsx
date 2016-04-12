@@ -1,4 +1,6 @@
+require('es6-promise').polyfill();
 import 'babel-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 // redux

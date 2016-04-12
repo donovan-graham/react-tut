@@ -11,7 +11,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick: () => {
+  handleFetch: () => {
     dispatch(fetchRequested());
   },
 });

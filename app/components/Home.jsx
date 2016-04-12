@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+
 import HelloWorld from 'components/HelloWorld';
 
 // const Home = ({ username, isLoading, onClick }) => (
@@ -8,16 +9,15 @@ import HelloWorld from 'components/HelloWorld';
 //   </div>
 // );
 
-
 class Home extends React.Component {
   componentDidMount() {
-    this.props.onClick();
+    this.props.handleFetch();
   }
 
   render() {
-    const { isLoading, username, onClick } = this.props;
+    const { isLoading, username, handleFetch } = this.props;
     return (
-      <div onClick={() => !isLoading && onClick()}>
+      <div onClick={() => !isLoading && handleFetch()}>
         <HelloWorld username={username} />
         {isLoading && <div>fetching data ...</div>}
       </div>
@@ -28,7 +28,7 @@ class Home extends React.Component {
 Home.propTypes = {
   username: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
+  handleFetch: PropTypes.func.isRequired,
 };
 
 
