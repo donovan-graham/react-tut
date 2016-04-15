@@ -10,6 +10,16 @@ import HelloWorld from 'components/HelloWorld';
 // );
 
 class Home extends React.Component {
+
+  componentWillMount() {
+    // debugger;
+    // this.props.location;
+    // this.props.params;
+
+    // do you want to do something here
+    // this.context.router.replace('/some-url');
+  }
+
   componentDidMount() {
     this.props.handleFetch();
   }
@@ -24,6 +34,10 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
 
 Home.propTypes = {
   username: PropTypes.string.isRequired,
