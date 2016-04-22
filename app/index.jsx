@@ -1,6 +1,46 @@
 require('es6-promise').polyfill();
 import 'babel-polyfill';
 
+// const encodeMetaConfig = (config) => encodeURIComponent(JSON.stringify(config));
+// const output = encodeMetaConfig({
+//   BFF_URL: 'http://api/v1/',
+//   ENV: 'production',
+//   NEW_RELIC: '12345',
+//   GOOGLE_ANALYTIC: '98765',
+// });
+// console.log('output:', output);
+
+
+const getMetaConfig = () => {
+  const metas = document.getElementsByTagName('meta');
+  // const content = metas.filter((meta) =>
+  //   meta.getAttribute('name') === 'app/config'
+  // ).map(meta =>
+  //   meta.getAttribute('content')
+  // );
+
+  // if (content) {
+  //   const config = JSON.parse(decodeURIComponent(content));
+  //   return config;
+  // }
+
+  let i;
+  for (i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === 'app/config') {
+      const content = metas[i].getAttribute('content');
+      const config = JSON.parse(decodeURIComponent(content));
+      return config;
+    }
+  }
+  return { error: 'config not found' };
+};
+
+const config = getMetaConfig();
+console.log('meta tag config', config);
+
+console.log('window global config:', window.AGConfig);
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 // redux
@@ -15,7 +55,6 @@ import routes from 'routes';
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-// debugger;
 
 const fakeServer = new Pretender();
 window.fakeServer = fakeServer;
