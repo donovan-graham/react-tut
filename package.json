@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  \"test/**/*@(.js|.jsx)\"",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "dev-server": "nodemon ./webpack.js",
+    "server": "nodemon ./server.js",
+    "start": "npm run dev-server & npm run server"
   },
   "author": "Donovan Graham <donovan@platform7.com>",
   "license": "ISC",
