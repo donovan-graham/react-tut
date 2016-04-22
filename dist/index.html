@@ -3,10 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="app/config" content="%7B%22BFF_URL%22%3A%22http%3A%2F%2Fapi%2Fv1%2F%22%2C%22ENV%22%3A%22production%22%2C%22NEW_RELIC%22%3A%2212345%22%2C%22GOOGLE_ANALYTIC%22%3A%2298765%22%7D" />
+
+    <!--
+      https://hacks.mozilla.org/2016/02/implementing-content-security-policy/
+      Todo: Inject as http header
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'none';
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' http://localhost:8081;
+      connect-src 'self' ws://localhost:8080 wss://localhost:8080;
+      style-src 'self' 'unsafe-inline' http://localhost:8081;
+      img-src 'self';
+      report-uri /__cspreport__;
+    ">
+
     <title>Welcome to react</title>
   </head>
   <body>
     <div id="app"></div>
-    <link href="/bundle.css" rel="stylesheet">
-  <script src="/bundle.js"></script></body>
+    <script>
+      (function() {
+        var AGConfig = {
+          bff_url: 'http://www.bff.com',
+          newrelic: '123123123'
+        };
+        window.AGConfig = AGConfig;
+      })();
+    </script>
+    <script src="http://localhost:8081/assets/vendor/route-recognizer.js"></script>
+    <script src="http://localhost:8081/assets/vendor/fake_xml_http_request.js"></script>
+    <script src="http://localhost:8081/assets/vendor/pretender.js"></script>
+    <link href="http://localhost:8081/assets/bundle.css" rel="stylesheet">
+
+    <script src="http://localhost:8081/assets/bundle.js"></script></body>
 </html>

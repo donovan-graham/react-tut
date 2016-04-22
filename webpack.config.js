@@ -11,7 +11,7 @@ const HotModuleReplacementPluginConfig = new webpack.HotModuleReplacementPlugin(
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:8081',
     'webpack/hot/only-dev-server',
     './app/index.jsx',
   ],
@@ -34,16 +34,18 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'assets/bundle.js',
     path: `${__dirname}/dist`,
     pathinfo: true,
-    publicPath: '/',
+    // publicPath:  '/assets/',
+    // publicPath:  '/',
+    publicPath: 'http://localhost:8081/assets/',
   },
-  devServer: {
-    contentBase: './dist',
-    hot: true,
-    historyApiFallback: true,
-  },
+  // devServer: {
+  //   contentBase: './dist',
+  //   hot: true,
+  //   historyApiFallback: true,
+  // },
   plugins: [
     HTMLWebpackPluginConfig,
     HotModuleReplacementPluginConfig,
