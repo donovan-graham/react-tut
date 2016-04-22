@@ -5,10 +5,12 @@ var url = require('url');
 var app = express();
 
 app.use('/js', proxy(url.parse('http://localhost:8080/js')));
+// app.use(express.static(__dirname + '/dist'));
 
 app.get('/*', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html');
 });
+
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
